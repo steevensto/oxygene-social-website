@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oxygène Social - Accompagnement des mineurs en difficulté</title>
+    <style>
+        /* Variables pour les couleurs */
+        :root {
+            --primary: #2c5282;
+            --secondary: #4299e1;
+            --accent: #ed8936;
+            --light: #f7fafc;
+            --dark: #2d3748;
+            --grey: #e2e8f0;
+            --text: #4a5568;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light);
+        }
+
+        /* En-tête */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-cta {
+            background-color: var(--accent);
+            color: white !important;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-cta:hover {
+            background-color: #dd6b20;
+        }
+
+        .burger-menu {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* Section héro */
+        .hero {
+            background: linear-gradient(rgba(44, 82, 130, 0.9), rgba(44, 82, 130, 0.7)), url('/api/placeholder/1200/600') center/cover no-repeat;
+            color: white;
+            padding: 8rem 2rem 6rem;
+            text-align: center;
+            margin-top: 76px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            margin: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: #dd6b20;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Contenu principal */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            margin: 4rem 0;
+        }
+
+        section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* Cartes */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* À propos */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .about-text {
+            order: 1;
+        }
+
+        .about-image {
+            order: 2;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Actions */
+        .action-item {
+            display: flex;
+            margin-bottom: 2rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .action-image {
+            flex: 0 0 35%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .action-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .action-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Témoignages */
+        .testimonials {
+            background-color: var(--grey);
+            padding: 3rem 2rem;
+            border-radius: 8px;
+        }
+
+        .testimonial-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 2rem;
+            padding: 1rem 0.5rem;
+            scroll-behavior: smooth;
+        }
+
+        .testimonial {
+            flex: 0 0 350px;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-text {
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Règles */
+        .rules {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .rules-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .rule-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .rule-category h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .rule-category ul {
+            list-style-position: inside;
+            margin-left: 1rem;
+        }
+
+        .rule-category li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--grey);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background-color: #1e3a5f;
+        }
+
+        .contact-info {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        /* Pied de page */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .social-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 76px;
+                left: 0;
+                right: 0;
+                background-color: white;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            nav li {
+                margin: 0;
+                padding: 0.5rem 2rem;
+            }
+
+            .burger-menu {
+                display: block;
+            }
+
+            .hero {
+                padding: 6rem 1rem 4rem;
+                margin-top: 68px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-content, .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-image {
+                order: 1;
+                margin-bottom: 1rem;
+            }
+
+            .about-text {
+                order: 2;
+            }
+
+            .action-item {
+                flex-direction: column;
+            }
+
+            .action-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="/api/placeholder/50/50" alt="Logo Oxygène Social">
+                <span>Oxygène Social</span>
+            </div>
+            <button class="burger-menu" id="burger-menu">☰</button>
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#a-propos">À propos</a></li>
+                    <li><a href="#nos-actions">Nos actions</a></li>
+                    <li><a href="#regles">Règles</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#soutenir" class="nav-cta">Nous soutenir</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="accueil">
+        <div class="hero-content">
+            <h1>Accompagner les mineurs en difficulté vers un avenir meilleur</h1>
+            <p>Oxygène Social œuvre pour la réinsertion sociale et l'autonomie des jeunes en situation de rupture.</p>
+            <div>
+                <a href="#nos-actions" class="btn">Découvrir nos actions</a>
+                <a href="#soutenir" class="btn btn-outline">Nous soutenir</a>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section id="a-propos">
+            <h2>Qui sommes-nous</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Oxygène Social est une association engagée dans l'accompagnement des mineurs en difficulté. Fondée en 2005 par un groupe d'éducateurs spécialisés, notre mission est de fournir un cadre bienveillant mais structuré pour aider les jeunes à retrouver leur place dans la société.</p>
+                    <p>Face à l'augmentation du nombre de jeunes en situation de rupture familiale, de déscolarisation ou en difficulté d'insertion sociale, notre équipe de professionnels qualifiés apporte des solutions concrètes pour prévenir la marginalisation et encourager l'autonomie.</p>
+                    <p>Notre approche combine hébergement encadré, suivi personnalisé et accompagnement éducatif pour permettre à chaque jeune de construire un projet d'avenir solide.</p>
+                </div>
+                <div class="about-image">
+                    <img src="/api/placeholder/500/300" alt="L'équipe d'Oxygène Social accompagnant des jeunes">
+                </div>
+            </div>
+        </section>
+
+        <section id="nos-actions">
+            <h2>Nos actions</h2>
+            <div class="action-item">
+                <div class="action-image" style="background-image: url('/api/placeholder/400/300');" aria-label="Hébergement encadré pour jeunes en difficulté"></div>
+                <div class="action-content">
+                    <h3>Hébergement encadré</h3>
+                    <p>Nous proposons un hébergement en structure collective où chaque jeune est suivi par des adultes référents. Ces éducateurs assurent une présence rassurante et structurante, tout en travaillant à développer l'autonomie des jeunes accueillis.</p>
+                    <p>Notre foyer offre un cadre sécurisant où les jeunes réapprennent à vivre en collectivité, à respecter des règles et à prendre progressivement leurs responsabilités dans un environnement bienveillant.</p>
+                </div>
+            </div>
+            <div class="action-item">
+                <div class="action-content">
+                    <h3>Accompagnement éducatif et professionnel</h3>
+                    <p>Notre équipe travaille individuellement avec chaque jeune pour élaborer un projet adapté à sa situation, ses compétences et ses aspirations. Nous les orientons vers une formation qualifiante, un retour à la scolarité ou une insertion professionnelle progressive.</p>
+                    <p>Cet accompagnement comprend la recherche de stages, l'aide à la rédaction de CV, la préparation aux entretiens et un suivi régulier pour s'assurer de la progression et adapter le parcours si nécessaire.</p>
+                </div>
+                <div class="action-image" style="background-image: url('/api/placeholder/400/300');" aria-label="Accompagnement éducatif personnalisé"></div>
+            </div>
+            <div class="action-item">
+                <div class="action-image" style="background-image: url('/api/placeholder/400/300');" aria-label="Apprentissage de l'autonomie au quotidien"></div>
+                <div class="action-content">
+                    <h3>Apprentissage de l'autonomie</h3>
+                    <p>Nous accompagnons les jeunes dans l'apprentissage de la gestion de leur vie quotidienne : budget, courses, cuisine, entretien du logement, hygiène personnelle, organisation du temps.</p>
+                    <p>Ces compétences essentielles sont acquises progressivement, avec un encadrement qui s'allège au fur et à mesure des progrès réalisés, permettant aux jeunes de gagner en confiance et en indépendance.</p>
+                </div>
+            </div>
+
+            <div class="testimonials">
+                <h3>Témoignages</h3>
+                <div class="testimonial-container">
+                    <div class="testimonial">
+                        <p class="testimonial-text">"Grâce à Oxygène Social, j'ai repris confiance en moi et trouvé ma voie. Aujourd'hui, j'ai obtenu mon CAP et je commence mon premier emploi."</p>
+                        <p class="testimonial-author">Théo, 18 ans</p>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">"L'équipe d'éducateurs m'a aidée à surmonter une période très difficile. Les règles étaient strictes mais justes, et ça m'a permis de me reconstruire."</p>
+                        <p class="testimonial-author">Sarah, 17 ans</p>
+                    </div>
+                    <div class="testimonial">
+                        <p class="testimonial-text">"En tant que partenaire institutionnel, nous apprécions le professionnalisme d'Oxygène Social et leur approche qui allie exigence et bienveillance."</p>
+                        <p class="testimonial-author">Marie Dupont, Service social départemental</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="regles">
+            <h2>Notre cadre éducatif</h2>
+            <p class="text-center">Chez Oxygène Social, nous croyons qu'un cadre clair et structuré est essentiel pour permettre aux jeunes de se reconstruire et d'évoluer positivement.</p>
+            
+            <div class="rules">
+                <div class="rules-content">
+                    <div class="rule-category">
+                        <h3>Règles de vie</h3>
+                        <ul>
+                            <li>Respect des horaires et du planning établi</li>
+                            <li>Participation aux tâches collectives</li>
+                            <li>Respect des adultes et des autres jeunes</li>
+                            <li>Interdiction formelle de violence physique ou verbale</li>
+                            <li>Présence obligatoire aux entretiens individuels hebdomadaires</li>
+                        </ul>
+                    </div>
+                    <div class="rule-category">
+                        <h3>Responsabilisation</h3>
+                        <ul>
+                            <li>Gestion encadrée de l'argent de poche</li>
+                            <li>Tenue d'un budget personnel</li>
+                            <li>Respect des engagements pris (formation, stage, école)</li>
+                            <li>Participation aux réunions collectives</li>
+                            <li>Apprentissage progressif de l'autonomie</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="rules-content">
+                    <div class="rule-category">
+                        <h3>Sanctions et valorisation</h3>
+                        <ul>
+                            <li>Système gradué de sanctions en cas de non-respect des règles</li>
+                            <li>Valorisation des efforts et des progrès</li>
+                            <li>Organisation d'activités et de sorties pour récompenser les comportements positifs</li>
+                            <li>Possibilité d'accéder à plus d'autonomie selon l'évolution</li>
+                        </ul>
+                    </div>
+                    <div class="rule-category">
+                        <h3>Objectifs</h3>
+                        <ul>
+                            <li>Prévention de la marginalisation et de la délinquance</li>
+                            <li>Développement de l'estime de soi</li>
+                            <li>Acquisition des compétences nécessaires à l'autonomie</li>
+                            <li>Construction d'un projet personnel et professionnel</li>
+                            <li>Réinsertion durable dans la société</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="soutenir">
+            <h2>Nous soutenir</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/400/200');" aria-label="Faire un don à l'association"></div>
+                    <div class="card-content">
+                        <h3>Faire un don</h3>
+                        <p>Votre soutien financier nous permet de poursuivre nos actions auprès des jeunes en difficulté et d'améliorer constamment la qualité de notre accompagnement.</p>
+                        <a href="#" class="btn">Je fais un don</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/400/200');" aria-label="Devenir bénévole"></div>
+                    <div class="card-content">
+                        <h3>Devenir bénévole</h3>
+                        <p>Vous avez des compétences à partager ? Du temps à consacrer ? Rejoignez notre équipe de bénévoles pour contribuer à l'insertion des jeunes que nous accompagnons.</p>
+                        <a href="#" class="btn">Je m'engage</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/api/placeholder/400/200');" aria-label="Devenir partenaire"></div>
+                    <div class="card-content">
+                        <h3>Devenir partenaire</h3>
+                        <p>Entreprises, collectivités, organismes de formation : votre collaboration est précieuse pour offrir des opportunités concrètes aux jeunes en réinsertion.</p>
+                        <a href="#" class="btn">Devenir partenaire</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contactez-nous</h2>
+            <div class="contact-container">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Sujet</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit">Envoyer</button>
+                </form>
+                <div class="contact-info">
+                    <h3>Nos coordonnées</h3>
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <span>15 rue de l'Espoir, 75000 Paris</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <span>01 23 45 67 89</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <span>contact@oxygene-social.org</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🕒</span>
+                        <span>Du lundi au vendredi, 9h-18h</span>
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <h4>Notre localisation</h4>
+                        <div style="background-image: url('/api/placeholder/400/200'); height: 200px; border-radius: 8px; margin-top: 1rem;" aria-label="Carte de localisation d'Oxygène Social"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Oxygène Social</h3>
+                <p>Association d'accompagnement des mineurs en difficulté vers l'autonomie et la réinsertion sociale.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon" aria-label="Facebook">f</a>
+                    <a href="#" class="social-icon" aria-label="Twitter">t</a>
+                    <a href="#" class="social-icon" aria-label="Instagram">i</a>
+                    <a href="#" class="social-icon" aria-label="LinkedIn">in</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Liens rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#a-propos">À propos</a></li>
+                    <li><a href="#nos-actions">Nos actions</a></li>
+                    <li><a href="#regles">Règles</a></li>
+                    <li><a href="#soutenir">Nous soutenir</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Informations légales</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Mentions légales</a></li>
+                    <li><a href="#">Politique de confidentialité</a></li>
+                    <li><a href="#">Conditions générales</a></li>
+                    <li><a href="#">Accessibilité</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Restez informé de nos actions et actualités</p>
+                <form>
+                    <div class="form-group">
+                        <input type="email" placeholder="Votre email" required>
+                    </div>
+                    <button type="submit">S'abonner</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Oxygène Social - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        

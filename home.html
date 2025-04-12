@@ -543,77 +543,119 @@
         /* Founders section styling */
         .founders-container {
             margin: 2rem 0;
+            position: relative;
         }
-
-        .founders-tabs {
+        
+        .carousel {
+            position: relative;
+            overflow: hidden;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .carousel-inner {
             display: flex;
-            border-bottom: 2px solid var(--grey);
-            margin-bottom: 2rem;
+            transition: transform 0.5s ease;
         }
-
-        .founder-tab {
-            padding: 0.75rem 1.5rem;
-            cursor: pointer;
-            font-weight: 500;
-            color: var(--text);
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-            margin-right: 1rem;
+        
+        .carousel-item {
+            min-width: 100%;
+            background: white;
+            padding: 2rem;
         }
-
-        .founder-tab.active {
-            color: var(--primary);
-            border-bottom: 3px solid var(--accent);
-        }
-
-        .founder-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .founder-content.active {
-            display: block;
-        }
-
+        
         .founder-profile {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
-
+        
         @media (min-width: 768px) {
             .founder-profile {
                 flex-direction: row;
             }
         }
-
+        
         .founder-image {
             flex: 0 0 280px;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
+        
         .founder-image img {
             width: 100%;
             height: auto;
             display: block;
         }
-
+        
         .founder-bio {
             flex: 1;
         }
-
+        
         .founder-bio h3 {
             color: var(--primary);
             margin-bottom: 0.5rem;
         }
-
+        
         .founder-bio .role {
             color: var(--accent);
             font-weight: 500;
             margin-bottom: 1rem;
             display: block;
+        }
+        
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .carousel-control:hover {
+            opacity: 1;
+        }
+        
+        .carousel-prev {
+            left: 10px;
+        }
+        
+        .carousel-next {
+            right: 10px;
+        }
+        
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            gap: 8px;
+        }
+        
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--grey);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .carousel-dot.active {
+            background-color: var(--accent);
         }
 
         @keyframes fadeIn {
@@ -672,54 +714,61 @@
                 <h3>Les fondateurs</h3>
                 <p>Tous trois animés par un engagement profond envers la jeunesse, Mariam, Moukoutar et Olivier ont uni leurs expériences et leurs valeurs pour fonder Oxygène Social. Ce qui les relie : une vision commune de l'accompagnement, un profond respect de l'humain, et la conviction que chaque jeune mérite d'être soutenu avec dignité, bienveillance et structure.</p>
                 
-                <div class="founders-tabs">
-                    <div class="founder-tab active" data-founder="mariam">Mariam</div>
-                    <div class="founder-tab" data-founder="moukoutar">Moukoutar</div>
-                    <div class="founder-tab" data-founder="olivier">Olivier</div>
-                </div>
-                
-                <div class="founder-content active" id="mariam-content">
-                    <div class="founder-profile">
-                        <div class="founder-image">
-                            <img src="/api/placeholder/280/350" alt="Mariam, co-fondatrice d'Oxygène Social">
+                <div class="carousel">
+                    <button class="carousel-control carousel-prev" aria-label="Fondateur précédent">&#10094;</button>
+                    <button class="carousel-control carousel-next" aria-label="Fondateur suivant">&#10095;</button>
+                    
+                    <div class="carousel-inner">
+                        <div class="carousel-item">
+                            <div class="founder-profile">
+                                <div class="founder-image">
+                                    <img src="/api/placeholder/280/350" alt="Olivier, co-fondateur d'Oxygène Social">
+                                </div>
+                                <div class="founder-bio">
+                                    <h3>Olivier</h3>
+                                    <span class="role">Éducateur spécialisé</span>
+                                    <p>Passionné par les relations humaines, Olivier a exploré différentes approches d'accompagnement, dont l'une particulièrement marquante : l'accompagnement individualisé en appartement.</p>
+                                    <p>Cette expérience lui a permis de constater combien un cadre stable et personnalisé peut transformer le parcours d'un jeune. Ce constat l'a motivé à co-fonder Oxygène Social, avec la volonté de proposer une structure capable de réellement changer les trajectoires.</p>
+                                    <p>Son approche valorise l'autonomie, la réinsertion sociale et scolaire, et repose sur une présence humaine forte et constructive.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="founder-bio">
-                            <h3>Mariam</h3>
-                            <span class="role">Éducatrice et auxiliaire de puériculture</span>
-                            <p>Mariam accompagne depuis plus de dix ans des enfants et des jeunes en difficulté, dans des crèches, hôpitaux et foyers, parfois sous main de justice.</p>
-                            <p>Ce qui l'anime, c'est le lien humain, la reconstruction de la confiance, et l'instauration d'un cadre bienveillant. Elle accorde une attention particulière à l'hygiène, l'apparence et l'image de soi, convaincue que se sentir valorisé est un premier pas vers l'estime de soi.</p>
-                            <p>À l'écoute, sans jugement, elle crée des projets adaptés et avance avec les jeunes à leur rythme, avec une mission simple : les aider à se relever et à croire en eux.</p>
+                        
+                        <div class="carousel-item">
+                            <div class="founder-profile">
+                                <div class="founder-image">
+                                    <img src="/api/placeholder/280/350" alt="Mariam, co-fondatrice d'Oxygène Social">
+                                </div>
+                                <div class="founder-bio">
+                                    <h3>Mariam</h3>
+                                    <span class="role">Éducatrice et auxiliaire de puériculture</span>
+                                    <p>Mariam accompagne depuis plus de dix ans des enfants et des jeunes en difficulté, dans des crèches, hôpitaux et foyers, parfois sous main de justice.</p>
+                                    <p>Ce qui l'anime, c'est le lien humain, la reconstruction de la confiance, et l'instauration d'un cadre bienveillant. Elle accorde une attention particulière à l'hygiène, l'apparence et l'image de soi, convaincue que se sentir valorisé est un premier pas vers l'estime de soi.</p>
+                                    <p>À l'écoute, sans jugement, elle crée des projets adaptés et avance avec les jeunes à leur rythme, avec une mission simple : les aider à se relever et à croire en eux.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="carousel-item">
+                            <div class="founder-profile">
+                                <div class="founder-image">
+                                    <img src="/api/placeholder/280/350" alt="Moukoutar, co-fondateur d'Oxygène Social">
+                                </div>
+                                <div class="founder-bio">
+                                    <h3>Moukoutar</h3>
+                                    <span class="role">Éducateur spécialisé</span>
+                                    <p>Moukoutar possède une solide expérience dans l'accompagnement social, la gestion de crises et l'animation d'ateliers éducatifs, culturels ou sportifs. Son parcours l'a amené à travailler dans des structures variées, ce qui a enrichi sa capacité d'adaptation et sa compréhension des réalités de terrain.</p>
+                                    <p>Très à l'aise dans la relation humaine, il place l'écoute, la médiation et la créativité au cœur de son action.</p>
+                                    <p>Passionné de cinéma, de cuisine et de littérature, il utilise ces centres d'intérêt pour créer des passerelles avec les jeunes et favoriser leur engagement dans des activités valorisantes.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="founder-content" id="moukoutar-content">
-                    <div class="founder-profile">
-                        <div class="founder-image">
-                            <img src="/api/placeholder/280/350" alt="Moukoutar, co-fondateur d'Oxygène Social">
-                        </div>
-                        <div class="founder-bio">
-                            <h3>Moukoutar</h3>
-                            <span class="role">Éducateur spécialisé</span>
-                            <p>Moukoutar possède une solide expérience dans l'accompagnement social, la gestion de crises et l'animation d'ateliers éducatifs, culturels ou sportifs. Son parcours l'a amené à travailler dans des structures variées, ce qui a enrichi sa capacité d'adaptation et sa compréhension des réalités de terrain.</p>
-                            <p>Très à l'aise dans la relation humaine, il place l'écoute, la médiation et la créativité au cœur de son action.</p>
-                            <p>Passionné de cinéma, de cuisine et de littérature, il utilise ces centres d'intérêt pour créer des passerelles avec les jeunes et favoriser leur engagement dans des activités valorisantes.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="founder-content" id="olivier-content">
-                    <div class="founder-profile">
-                        <div class="founder-image">
-                            <img src="/api/placeholder/280/350" alt="Olivier, co-fondateur d'Oxygène Social">
-                        </div>
-                        <div class="founder-bio">
-                            <h3>Olivier</h3>
-                            <span class="role">Éducateur spécialisé</span>
-                            <p>Passionné par les relations humaines, Olivier a exploré différentes approches d'accompagnement, dont l'une particulièrement marquante : l'accompagnement individualisé en appartement.</p>
-                            <p>Cette expérience lui a permis de constater combien un cadre stable et personnalisé peut transformer le parcours d'un jeune. Ce constat l'a motivé à co-fonder Oxygène Social, avec la volonté de proposer une structure capable de réellement changer les trajectoires.</p>
-                            <p>Son approche valorise l'autonomie, la réinsertion sociale et scolaire, et repose sur une présence humaine forte et constructive.</p>
-                        </div>
+                    
+                    <div class="carousel-indicators">
+                        <span class="carousel-dot active" data-index="0"></span>
+                        <span class="carousel-dot" data-index="1"></span>
+                        <span class="carousel-dot" data-index="2"></span>
                     </div>
                 </div>
             </div>
@@ -951,23 +1000,62 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const founderTabs = document.querySelectorAll('.founder-tab');
-            const founderContents = document.querySelectorAll('.founder-content');
+            // Founders carousel functionality
+            const carousel = document.querySelector('.carousel-inner');
+            const items = document.querySelectorAll('.carousel-item');
+            const dots = document.querySelectorAll('.carousel-dot');
+            const prevBtn = document.querySelector('.carousel-prev');
+            const nextBtn = document.querySelector('.carousel-next');
+            let currentIndex = 0;
+            const itemCount = items.length;
             
-            founderTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    // Remove active class from all tabs and contents
-                    founderTabs.forEach(t => t.classList.remove('active'));
-                    founderContents.forEach(c => c.classList.remove('active'));
-                    
-                    // Add active class to clicked tab
-                    tab.classList.add('active');
-                    
-                    // Show corresponding content
-                    const founder = tab.getAttribute('data-founder');
-                    document.getElementById(`${founder}-content`).classList.add('active');
+            // Initialize carousel
+            updateCarousel();
+            
+            // Event listeners
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + itemCount) % itemCount;
+                updateCarousel();
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % itemCount;
+                updateCarousel();
+            });
+            
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    currentIndex = parseInt(dot.getAttribute('data-index'));
+                    updateCarousel();
                 });
             });
+            
+            // Auto slide every 7 seconds
+            let autoSlide = setInterval(() => {
+                currentIndex = (currentIndex + 1) % itemCount;
+                updateCarousel();
+            }, 7000);
+            
+            // Pause auto slide on hover
+            carousel.parentElement.addEventListener('mouseenter', () => {
+                clearInterval(autoSlide);
+            });
+            
+            carousel.parentElement.addEventListener('mouseleave', () => {
+                autoSlide = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % itemCount;
+                    updateCarousel();
+                }, 7000);
+            });
+            
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                dots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+                dots[currentIndex].classList.add('active');
+            }
             
             // Existing burger menu code
             const burgerMenu = document.getElementById('burger-menu');
